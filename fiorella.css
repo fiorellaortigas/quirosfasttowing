@@ -1,0 +1,514 @@
+/* ============================================================
+   FIORELLA MOTION SYSTEM — colors_and_type.css
+
+   Structure is fixed. Mood adapts.
+
+   The spacing system, type SCALE (clamps), section rhythm,
+   layout and cinematic-minimal philosophy NEVER change between
+   clients. What changes is the MOOD — font family, weight,
+   glow intensity, palette — which is swapped by setting one
+   attribute on <html> or <body>:
+
+     <body data-mood="neon">         default — smoke shops / nightlife
+     <body data-mood="industrial">   towing / construction / trades
+     <body data-mood="luxury">       beauty / spa / fine dining
+     <body data-mood="corporate">    SaaS / agency / professional services
+
+   To add a new mood, copy a [data-mood] block at the bottom of
+   this file and override only the mood tokens.
+   ============================================================ */
+
+/* All four mood font families pre-loaded. Browsers only render
+   the families the active mood references, so the cost is paid
+   once per page load. */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Archivo+Black&family=Barlow+Condensed:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Italiana&family=Cinzel:wght@400;500;600;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700;1,800;1,900&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,800;1,400;1,700;1,800&family=Didact+Gothic&family=Josefin+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   STRUCTURAL TOKENS — fixed across every mood.
+   These describe the LAYOUT of the system, not its voice.
+   Do not override these per client.
+   ============================================================ */
+:root {
+  /* Type scale — fluid clamps locked to the Fiorella rhythm.
+     Calmer, more editorial — pushed smaller than the original Peace
+     Pipe scale so layouts breathe and feel curated, not loud. */
+  --fs-hero:        clamp(3.5rem, 9vw, 7.5rem);
+  --fs-editorial:   clamp(3.5rem, 8vw, 6.5rem);
+  --fs-section:     clamp(1.75rem, 3vw, 2.6rem);
+  --fs-display-2:   clamp(2rem, 4vw, 4rem);
+  --fs-display-cta: clamp(2.5rem, 5.5vw, 5.5rem);
+  --fs-prod-name:   clamp(1.4rem, 2.4vw, 2.4rem);
+  --fs-intro:       clamp(1.4rem, 2.5vw, 2.2rem);
+  --fs-lead:        clamp(.95rem, 1.6vw, 1.2rem);
+  --fs-body:        1rem;
+  --fs-small:       .95rem;
+  --fs-label:       .72rem;
+  --fs-label-sm:    .62rem;
+  --fs-stat-num:    .72rem;
+
+  /* Line heights — multi-line headlines breathe; body stays comfortable */
+  --lh-hero:        1;
+  --lh-display:     .98;
+  --lh-body:        1.6;
+  --lh-editorial:   1.35;
+  --lh-tight:       1;
+
+  /* Section rhythm — generous, always */
+  --space-section:    120px;
+  --space-section-lg: 160px;
+  --space-section-md: 80px;
+  --space-section-sm: 60px;
+  --gutter:           56px;
+  --gutter-md:        28px;
+  --gutter-sm:        16px;
+  --max-content:      1400px;
+  --max-narrow:       560px;
+
+  /* Radii — pills bend, cards are sharp. Constant across moods. */
+  --r-pill:   100px;
+  --r-card:   4px;
+  --r-tight:  2px;
+
+  /* Motion timings */
+  --ease:        cubic-bezier(.25,.46,.45,.94);
+  --dur-fast:    .2s;
+  --dur:         .4s;
+  --dur-slow:    .9s;
+  --dur-img:     1.1s;
+}
+
+/* ============================================================
+   MOOD: NEON  (default — Peace Pipe reference)
+   Smoke shops, nightlife, dispensaries, music venues, edgy retail.
+   Heavy glow, deep tinted black, single electric accent.
+   ============================================================ */
+:root,
+[data-mood="neon"] {
+  /* Palette */
+  --bg:        #0d1a0e;
+  --bg-2:      #121f12;
+  --bg-3:      #172417;
+  --ink:       #f5f0e8;
+  --ink-2:     rgba(245,240,232,.72);  /* nav, body-muted — bumped for dark-mode readability */
+  --ink-3:     rgba(245,240,232,.48);  /* eyebrows, labels — bumped for dark-mode readability */
+  --ink-sub:   rgba(245,240,232,.82);  /* subtitle tier — clearly readable */
+  --accent:    #7fff00;
+  --accent-2:  rgba(127,255,0,.13);
+  --border:    rgba(245,240,232,.09);
+  --border-2:  rgba(245,240,232,.18);
+  --on-accent: #0a1a00;
+
+  /* Type families — Syne stays the dominant futuristic display.
+     Space Grotesk for body / paragraphs (premium neo-grotesk).
+     Barlow Condensed for supporting subtitles + taglines
+     (cinematic marquee feel without going retro-tech).
+     Bebas Neue is the BRANDED button voice — condensed display
+     caps, distinctive, not generic UI bold sans. */
+  --f-disp:    'Syne', 'Helvetica Neue', Arial, sans-serif;
+  --f-body:    'Space Grotesk', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif:   'Barlow Condensed', 'Oswald', 'Helvetica Neue', sans-serif;
+  --f-btn:     'Bebas Neue', 'Impact', sans-serif;
+  --f-accent:  'Fraunces', 'Times New Roman', Georgia, serif;
+
+  /* Weights */
+  --fw-disp:        800;
+  --fw-body:        400;
+  --fw-strong:      500;
+  --fw-serif-light: 300;
+
+  /* Letterspacing */
+  --ls-display:     -.02em;
+  --ls-display-sm:  -.01em;
+  --ls-label:       .22em;
+  --ls-nav:         .15em;
+  --ls-pill:        .06em;
+
+  /* Glow intensity — neon is loud */
+  --glow-headline:  0 0 80px var(--accent-2), 0 0 160px rgba(127,255,0,.12);
+  --glow-cta:       0 0 60px rgba(127,255,0,.35), 0 0 140px rgba(127,255,0,.15);
+  --glow-logo:      0 0 28px rgba(127,255,0,.45);
+  --glow-logo-drop: drop-shadow(0 0 50px rgba(127,255,0,.55)) drop-shadow(0 0 100px rgba(127,255,0,.25));
+  --glow-strength:  1; /* multiplier hook for future overrides */
+
+  /* Imagery treatment */
+  --img-filter-rest:  brightness(.68) saturate(1.0) grayscale(.08);
+  --img-filter-hover: brightness(.92) saturate(1.35) grayscale(0);
+  --map-filter:       brightness(.6) saturate(.7) contrast(1.1) hue-rotate(10deg);
+}
+
+/* ============================================================
+   MOOD: INDUSTRIAL
+   Towing, construction, trades, auto repair, logistics.
+   Condensed display caps, oxide-orange or hi-vis accent,
+   minimal glow, concrete-grey surfaces, hard contrast.
+   ============================================================ */
+[data-mood="industrial"] {
+  /* Palette — concrete + steel + hi-vis */
+  --bg:        #0e0f10;
+  --bg-2:      #15171a;
+  --bg-3:      #1d2024;
+  --ink:       #f2f2ef;
+  --ink-2:     rgba(242,242,239,.74);
+  --ink-3:     rgba(242,242,239,.50);
+  --ink-sub:   rgba(242,242,239,.84);
+  --accent:    #ff7a00;        /* safety orange — alt: #ffd400 hi-vis yellow */
+  --accent-2:  rgba(255,122,0,.12);
+  --border:    rgba(242,242,239,.10);
+  --border-2:  rgba(242,242,239,.22);
+  --on-accent: #15171a;
+
+  /* Type — heavy condensed display, sturdy body */
+  --f-disp:  'Archivo Black', 'Oswald', 'Impact', sans-serif;
+  --f-body:  'Oswald', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif: 'Oswald', sans-serif;        /* no serif in industrial; alias to display */
+  --f-btn:   'Bebas Neue', 'Impact', sans-serif;
+
+  /* Weights — heavy by default */
+  --fw-disp:        900;
+  --fw-body:        500;
+  --fw-strong:      700;
+  --fw-serif-light: 400;
+
+  /* Tracking — neutral / slightly negative on display, generous on labels */
+  --ls-display:     -.015em;
+  --ls-display-sm:  -.005em;
+  --ls-label:       .24em;
+  --ls-nav:         .14em;
+  --ls-pill:        .08em;
+
+  /* Glow — minimal. Industrial reads as solid. */
+  --glow-headline:  none;
+  --glow-cta:       none;
+  --glow-logo:      none;
+  --glow-logo-drop: none;
+  --glow-strength:  0;
+
+  /* Imagery — heavier contrast, less saturation lift */
+  --img-filter-rest:  brightness(.72) contrast(1.08) saturate(.85);
+  --img-filter-hover: brightness(.95) contrast(1.12) saturate(1.05);
+  --map-filter:       brightness(.6) saturate(.4) contrast(1.2);
+}
+
+/* ============================================================
+   MOOD: LUXURY
+   Beauty, spa, fine dining, hotels, fashion, fine jewelry.
+   Elegant serif display, light weights, warm cream palette,
+   restrained gold accent, ghostly glow.
+   ============================================================ */
+[data-mood="luxury"] {
+  /* Palette — black-cream-gold (dark luxury) */
+  --bg:        #0c0a08;
+  --bg-2:      #15110d;
+  --bg-3:      #1d1813;
+  --ink:       #f4ecdf;
+  --ink-2:     rgba(244,236,223,.72);
+  --ink-3:     rgba(244,236,223,.48);
+  --ink-sub:   rgba(244,236,223,.84);
+  --accent:    #c9a875;
+  --accent-2:  rgba(201,168,117,.14);
+  --border:    rgba(244,236,223,.10);
+  --border-2:  rgba(244,236,223,.20);
+  --on-accent: #15110d;
+
+  /* Type — Bodoni Moda + Didact Gothic.
+     Bodoni's knife-edge Didone contrast for the dominant editorial
+     display (closer to The Seasons / Dream Avenue / Tan Pearl
+     references than Playfair). Italic on the accent line for
+     magazine-cover energy, roman on the second.
+     Didact Gothic — a refined geometric sans — for the subtitle
+     and button voice. No script accent. */
+  --f-disp:    'Bodoni Moda', 'Playfair Display', 'Times New Roman', Georgia, serif;
+  --f-body:    'Didact Gothic', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif:   'Bodoni Moda', 'Playfair Display', 'Times New Roman', Georgia, serif;
+  --f-btn:     'Didact Gothic', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-accent:  'Bodoni Moda', 'Playfair Display', serif;
+
+  /* Weights — Bodoni Moda 800 italic on accent, 500 roman on the
+     second line. Carries fashion-cover contrast. */
+  --fw-disp:        800;
+  --fw-body:        400;
+  --fw-strong:      500;
+  --fw-serif-light: 500;
+
+  /* Tracking — open and slow on display caps; airy on labels */
+  --ls-display:     -.005em;
+  --ls-display-sm:  -.005em;
+  --ls-label:       .32em;
+  --ls-nav:         .22em;
+  --ls-pill:        .22em;
+
+  /* Glow — barely there, warm gold */
+  --glow-headline:  0 0 60px rgba(201,168,117,.12);
+  --glow-cta:       0 0 40px rgba(201,168,117,.18);
+  --glow-logo:      0 0 18px rgba(201,168,117,.22);
+  --glow-logo-drop: drop-shadow(0 0 30px rgba(201,168,117,.25));
+  --glow-strength:  .35;
+
+  /* Imagery — cinematic warm grade */
+  --img-filter-rest:  brightness(.74) contrast(1.02) saturate(.92) sepia(.05);
+  --img-filter-hover: brightness(.92) contrast(1.05) saturate(1.08) sepia(.02);
+  --map-filter:       brightness(.65) saturate(.55) contrast(1.05) sepia(.15);
+}
+
+/* ============================================================
+   MOOD: CORPORATE
+   SaaS, agencies, B2B, professional services, finance,
+   healthcare-tech. Clean modern sans, balanced weight, ink-blue
+   accent, almost no glow, dark slate surfaces.
+   ============================================================ */
+[data-mood="corporate"] {
+  /* Palette — slate + ink-blue accent */
+  --bg:        #0b0e14;
+  --bg-2:      #11151e;
+  --bg-3:      #181d28;
+  --ink:       #eef1f6;
+  --ink-2:     rgba(238,241,246,.74);
+  --ink-3:     rgba(238,241,246,.50);
+  --ink-sub:   rgba(238,241,246,.84);
+  --accent:    #5b8def;        /* electric ink blue */
+  --accent-2:  rgba(91,141,239,.12);
+  --border:    rgba(238,241,246,.09);
+  --border-2:  rgba(238,241,246,.18);
+  --on-accent: #0b0e14;
+
+  /* Type — Inter, used Swiss-inspired. Single family, multiple
+     weights. Refined modern brand-system feel, not generic SaaS. */
+  --f-disp:  'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-body:  'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-btn:   'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Weights — calmer Swiss measured 500 for display, NOT 700.
+     The contrast comes from spacing + tracking, not weight. */
+  --fw-disp:        500;
+  --fw-body:        400;
+  --fw-strong:      500;
+  --fw-serif-light: 400;
+
+  /* Tracking — tightly tuned, slightly negative on display. */
+  --ls-display:     -.035em;
+  --ls-display-sm:  -.025em;
+  --ls-label:       .18em;
+  --ls-nav:         .12em;
+  --ls-pill:        .04em;
+
+  /* Glow — almost nothing. Corporate reads as credibility. */
+  --glow-headline:  none;
+  --glow-cta:       0 0 32px rgba(91,141,239,.18);
+  --glow-logo:      none;
+  --glow-logo-drop: none;
+  --glow-strength:  .15;
+
+  /* Imagery — clean, slightly cool */
+  --img-filter-rest:  brightness(.78) contrast(1.04) saturate(.9);
+  --img-filter-hover: brightness(.95) contrast(1.06) saturate(1.0);
+  --map-filter:       brightness(.7) saturate(.6) contrast(1.05);
+}
+
+/* ============================================================
+   MOOD: LUXURY-LIGHT
+   Light cream variant of luxury. Same family stack and tracking,
+   inverted surface — for hotels, fashion, fine retail editorial
+   covers that need a bright page. Demonstrates that the system
+   handles LIGHT backgrounds, not only dark ones.
+   ============================================================ */
+[data-mood="luxury-light"] {
+  /* Palette — cream + warm-black + darker gold for contrast */
+  --bg:        #f4ecdf;
+  --bg-2:      #ebe2d1;
+  --bg-3:      #ddd0ba;
+  --ink:       #1b1612;
+  --ink-2:     rgba(27,22,18,.68);
+  --ink-3:     rgba(27,22,18,.46);
+  --ink-sub:   rgba(27,22,18,.82);
+  --accent:    #8e6b2f;
+  --accent-2:  rgba(142,107,47,.16);
+  --border:    rgba(27,22,18,.10);
+  --border-2:  rgba(27,22,18,.20);
+  --on-accent: #f4ecdf;
+
+  /* Same Bodoni Moda + Didact Gothic editorial pairing as dark luxury */
+  --f-disp:    'Bodoni Moda', 'Playfair Display', 'Times New Roman', Georgia, serif;
+  --f-body:    'Didact Gothic', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif:   'Bodoni Moda', 'Playfair Display', 'Times New Roman', Georgia, serif;
+  --f-btn:     'Didact Gothic', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-accent:  'Bodoni Moda', 'Playfair Display', serif;
+
+  --fw-disp:        800;
+  --fw-body:        400;
+  --fw-strong:      500;
+  --fw-serif-light: 500;
+
+  --ls-display:     -.005em;
+  --ls-display-sm:  -.005em;
+  --ls-label:       .32em;
+  --ls-nav:         .22em;
+  --ls-pill:        .22em;
+
+  --glow-headline:  0 0 40px rgba(142,107,47,.10);
+  --glow-cta:       0 0 30px rgba(142,107,47,.15);
+  --glow-logo:      none;
+  --glow-logo-drop: none;
+  --glow-strength:  .2;
+
+  --img-filter-rest:  brightness(1.0) contrast(1.0) saturate(.95);
+  --img-filter-hover: brightness(1.02) contrast(1.04) saturate(1.05);
+  --map-filter:       brightness(1.0) saturate(.65) contrast(1.02) sepia(.1);
+}
+
+/* ============================================================
+   SEMANTIC ALIASES — same in every mood
+   ============================================================ */
+:root {
+  --color-fg:        var(--ink);
+  --color-fg-muted:  var(--ink-2);
+  --color-fg-faint:  var(--ink-3);
+  --color-bg:        var(--bg);
+  --color-bg-elev:   var(--bg-2);
+  --color-link:      var(--ink);
+  --color-link-hover:var(--accent);
+  --border-thin:     1px solid var(--border);
+  --border-mid:      1px solid var(--border-2);
+}
+
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-weight: var(--fw-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   SEMANTIC TYPE PRIMITIVES — drop-in classes / attributes.
+   These reference the mood tokens, so a single attribute swap
+   on <body> rebrands every heading on the page.
+   ============================================================ */
+h1, .h1, [data-type="hero"] {
+  font-family: var(--f-disp);
+  font-weight: var(--fw-disp);
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+h2, .h2, [data-type="section"] {
+  font-family: var(--f-disp);
+  font-weight: var(--fw-disp);
+  font-size: var(--fs-section);
+  letter-spacing: var(--ls-display-sm);
+  text-transform: uppercase;
+  line-height: var(--lh-display);
+}
+
+.h-editorial, [data-type="editorial"] {
+  font-family: var(--f-disp);
+  font-weight: var(--fw-disp);
+  font-size: var(--fs-editorial);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+.h-cta, [data-type="cta-hammer"] {
+  font-family: var(--f-disp);
+  font-weight: var(--fw-disp);
+  font-size: var(--fs-display-cta);
+  line-height: .92;
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+.lead, [data-type="lead"] {
+  font-family: var(--f-serif);
+  font-weight: var(--fw-serif-light);
+  font-style: italic;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* Luxury & Corporate moods don't use italic on leads — opt out per mood */
+[data-mood="neon"] .lead,
+[data-mood="neon"] [data-type="lead"] {
+  /* Neon subtitle — Space Grotesk 400 sentence-case with measured
+     tracking. Modern, sharp, neutral. No italic, no condensed marquee,
+     no retro-tech. Just refined supporting type. */
+  font-family: 'Space Grotesk', 'Inter', 'Helvetica Neue', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: .005em;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+[data-mood="luxury"] .h2   { letter-spacing: -.005em; font-style: normal; text-transform: none; }
+[data-mood="luxury"] .lead {
+  /* Didact Gothic uppercase tracked — refined geometric sans
+     subtitle. Magazine-spread eyebrow energy. */
+  font-family: var(--f-body); font-style: normal; font-weight: 400;
+  text-transform: uppercase; letter-spacing: .28em; font-size: 12px;
+  line-height: 1.7; color: var(--ink-sub);
+}
+
+.intro-copy, [data-type="intro"] {
+  font-family: var(--f-serif);
+  font-weight: var(--fw-serif-light);
+  font-size: var(--fs-intro);
+  line-height: var(--lh-editorial);
+}
+
+[data-mood="industrial"] .intro-copy,
+[data-mood="industrial"] [data-type="intro"] {
+  font-family: var(--f-body);
+  text-transform: uppercase;
+  letter-spacing: -.005em;
+  font-weight: 600;
+}
+
+.eyebrow, [data-type="eyebrow"] {
+  font-family: var(--f-disp);
+  font-size: var(--fs-label-sm);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-weight: var(--fw-strong);
+  color: var(--ink-3);
+}
+
+.label, [data-type="label"] {
+  font-family: var(--f-body);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  font-weight: var(--fw-strong);
+  color: var(--ink-2);
+}
+
+.body, p, [data-type="body"] {
+  font-family: var(--f-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+
+.body-muted { color: var(--ink-2); }
+.body-faint { color: var(--ink-3); }
+.accent     { color: var(--accent); }
+
+/* Accent text glow — uses the mood's headline glow if defined */
+.acc-glow {
+  color: var(--accent);
+  text-shadow: var(--glow-headline);
+}

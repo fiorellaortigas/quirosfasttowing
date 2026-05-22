@@ -1,0 +1,574 @@
+/* ============================================================
+   Quiros Fast Towing — Industrial-Blue mood
+   A blue, premium reskin of the Fiorella industrial mood.
+   All structure inherited from fiorella.css + site.css.
+   ============================================================ */
+
+[data-mood="industrial-blue"] {
+  /* Palette — near-black tinted slightly blue, with electric ink-blue accent */
+  --bg:        #07090d;
+  --bg-2:      #0d1118;
+  --bg-3:      #141a25;
+  --ink:       #f2f4f8;
+  --ink-2:     rgba(242,244,248,.74);
+  --ink-3:     rgba(242,244,248,.48);
+  --ink-sub:   rgba(242,244,248,.86);
+
+  --accent:    #2c7bff;          /* electric blue pulled from the Quiros logo */
+  --accent-2:  rgba(44,123,255,.14);
+  --border:    rgba(242,244,248,.10);
+  --border-2:  rgba(242,244,248,.22);
+  --on-accent: #ffffff;
+
+  /* Industrial type system, kept */
+  --f-disp:  'Archivo Black', 'Oswald', 'Impact', sans-serif;
+  --f-body:  'Oswald', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif: 'Oswald', sans-serif;
+  --f-btn:   'Archivo Black', 'Bebas Neue', 'Impact', sans-serif;
+
+  --fw-disp:        900;
+  --fw-body:        500;
+  --fw-strong:      700;
+  --fw-serif-light: 400;
+
+  --ls-display:     -.02em;
+  --ls-display-sm:  -.01em;
+  --ls-label:       .24em;
+  --ls-nav:         .14em;
+  --ls-pill:        .08em;
+
+  /* Subtle blue glow — refined, not loud */
+  --glow-headline:  0 0 60px rgba(44,123,255,.16);
+  --glow-cta:       0 0 28px rgba(44,123,255,.32), 0 0 70px rgba(44,123,255,.12);
+  --glow-logo:      0 0 16px rgba(44,123,255,.30);
+  --glow-logo-drop: drop-shadow(0 0 18px rgba(44,123,255,.35));
+  --glow-strength:  .5;
+
+  --img-filter-rest:  brightness(.62) contrast(1.08) saturate(.82);
+  --img-filter-hover: brightness(.95) contrast(1.12) saturate(1.05);
+  --map-filter:       brightness(.55) saturate(.4) contrast(1.15) hue-rotate(195deg);
+}
+
+/* ============================================================
+   NAV — emblem logo left, links centered, blue phone pill right
+   ============================================================ */
+.nav-logo-img {
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.nav-logo-img img {
+  height: 78px; width: auto;
+  filter: drop-shadow(0 6px 20px rgba(0,0,0,.55))
+          drop-shadow(0 0 24px rgba(44,123,255,.28));
+  transition: height var(--dur);
+}
+.nav.stuck .nav-logo-img img { height: 60px; }
+
+/* Center the nav links between logo and CTA */
+.nav-links {
+  font-family: var(--f-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  font-size: .78rem;
+  gap: 30px;
+}
+@media (max-width: 1200px) {
+  .nav-links { gap: 22px; font-size: .74rem; letter-spacing: .11em; }
+}
+.nav-links a {
+  color: var(--ink);
+  opacity: .82;
+  position: relative;
+  padding: 4px 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.nav-links a:hover { opacity: 1; }
+.nav-links a.active {
+  color: var(--accent);
+  opacity: 1;
+}
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(44,123,255,.7);
+}
+
+/* ============================================================
+   HERO — image background instead of WebGL canvas
+   Keeps the Fiorella vignette + structure; just swaps the shader.
+   ============================================================ */
+.hero-photo {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover;
+  background-position: center 40%;
+  filter: brightness(.5) contrast(1.08) saturate(.75);
+}
+.hero-photo::after {
+  /* Layered vignettes — mirror the system's ::after gradient and add a
+     soft side-light so centered type still has the room to breathe. */
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, transparent 25%, color-mix(in oklab, var(--bg) 65%, transparent) 100%),
+    linear-gradient(to bottom,
+      color-mix(in oklab, var(--bg) 55%, transparent) 0%,
+      transparent 18%, transparent 80%,
+      color-mix(in oklab, var(--bg) 88%, transparent) 100%);
+}
+
+/* Refined industrial hero typography — calmer than default industrial */
+[data-mood="industrial-blue"] .hero-h1 {
+  font-size: clamp(3rem, 7vw, 6.2rem);
+  line-height: .94;
+  letter-spacing: -.02em;
+  font-weight: 900;
+}
+[data-mood="industrial-blue"] .hero-h1 .acc {
+  color: var(--accent);
+  text-shadow: var(--glow-headline);
+}
+[data-mood="industrial-blue"] .hero-tag {
+  font-family: var(--f-body);
+  font-style: normal;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: var(--ink-sub);
+  max-width: 460px;
+  line-height: 1.6;
+}
+
+/* Primary CTA: prominent + subtle glow, blue pill */
+[data-mood="industrial-blue"] .btn-prim {
+  font-family: var(--f-disp);
+  font-weight: 900;
+  font-size: .9rem;
+  letter-spacing: .08em;
+  padding: 16px 32px;
+  box-shadow: var(--glow-cta), inset 0 1px 0 rgba(255,255,255,.20);
+}
+[data-mood="industrial-blue"] .btn-prim:hover { background: #1a5fdf; }
+
+[data-mood="industrial-blue"] .btn-ghost {
+  font-family: var(--f-disp);
+  font-weight: 700;
+  font-size: .82rem;
+  letter-spacing: .08em;
+  padding: 15px 28px;
+}
+
+/* CTA on nav: smaller pill with the blue accent */
+.nav-pill {
+  display: inline-flex; align-items: center; gap: 9px;
+}
+.nav-pill .pulse {
+  width: 7px; height: 7px; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 0 0 rgba(255,255,255,.55);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.55); }
+  50% { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+}
+
+/* ============================================================
+   HERO LICENSE STRIP — sits below the hero CTAs as a single,
+   restrained line of trust info. Not a full stats grid.
+   ============================================================ */
+.hero-trust {
+  margin-top: 56px;
+  display: inline-flex; align-items: center; gap: 24px;
+  font-family: var(--f-body); font-size: .65rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  font-weight: 700; color: var(--ink-3);
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.hero-trust .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+
+/* ============================================================
+   EDITORIAL — refine industrial slogan
+   ============================================================ */
+[data-mood="industrial-blue"] .editorial-h {
+  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+  letter-spacing: -.02em;
+}
+[data-mood="industrial-blue"] .editorial-sub {
+  font-family: var(--f-body);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1.05rem;
+  color: var(--ink-sub);
+  max-width: 520px; line-height: 1.65;
+}
+
+/* ============================================================
+   PRODUCTS — tone down to a clean services grid pattern
+   The system's .prod-row is alternating image/info. We use it as-is
+   so the cinematic image-left / type-right rhythm is preserved.
+   ============================================================ */
+[data-mood="industrial-blue"] .prod-name {
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  letter-spacing: -.015em;
+}
+[data-mood="industrial-blue"] .prod-desc {
+  font-family: var(--f-body); font-weight: 500;
+  color: var(--ink-2); line-height: 1.75;
+}
+[data-mood="industrial-blue"] .prod-tag {
+  font-family: var(--f-disp); font-weight: 900;
+  background: var(--accent); color: var(--on-accent);
+}
+
+/* ============================================================
+   FINAL CTA tone — industrial refinements
+   ============================================================ */
+[data-mood="industrial-blue"] .final-h {
+  font-size: clamp(3rem, 7vw, 6.2rem);
+}
+[data-mood="industrial-blue"] .final-sub {
+  font-family: var(--f-body);
+  font-style: normal;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1rem;
+  color: var(--ink-sub);
+  max-width: 460px;
+}
+.final-phone {
+  font-family: var(--f-disp);
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin: 6px 0 28px;
+  display: inline-flex; align-items: center; gap: 16px;
+  position: relative; z-index: 1;
+}
+.final-phone .live {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #00d56b;
+  box-shadow: 0 0 14px #00d56b;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+/* ============================================================
+   FOOTER tweaks — use real logo
+   ============================================================ */
+.foot-brand img {
+  height: 52px; width: auto;
+  filter: var(--glow-logo-drop);
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   FINAL CTA — repurpose the daytime truck as background.
+   Mirrors the hero treatment so the page bookends visually.
+   ============================================================ */
+.final { isolation: isolate; }
+.final-photo {
+  position: absolute; inset: 0; z-index: -1;
+  background-size: cover;
+  background-position: center 45%;
+  filter: brightness(.32) contrast(1.10) saturate(.7);
+}
+.final-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, transparent 20%, color-mix(in oklab, var(--bg) 78%, transparent) 100%),
+    linear-gradient(to bottom,
+      color-mix(in oklab, var(--bg) 72%, transparent) 0%,
+      transparent 25%, transparent 75%,
+      color-mix(in oklab, var(--bg) 92%, transparent) 100%);
+}
+/* The default .final::before adds an accent-tinted radial; over a
+   photo backdrop it muddies — soften it. */
+.final::before { background: radial-gradient(ellipse 50% 50% at 50% 55%, rgba(44,123,255,.18) 0%, transparent 65%); }
+
+/* ============================================================
+   IMG treatment inside prod-img / gal-cell
+   site.css scopes the cinematic filter to <image-slot>, but we use
+   plain <img> elements. Mirror the same filter + hover transform.
+   ============================================================ */
+.prod-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  filter: var(--img-filter-rest);
+  transition: filter var(--dur-img) var(--ease), transform var(--dur-img) var(--ease);
+}
+.prod-row:hover .prod-img img {
+  filter: var(--img-filter-hover);
+  transform: scale(1.04);
+}
+.gal-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  filter: var(--img-filter-rest);
+  transition: filter var(--dur) var(--ease), transform var(--dur-img) var(--ease);
+}
+.gal-cell:hover img {
+  filter: var(--img-filter-hover);
+  transform: scale(1.06);
+}
+
+/* ============================================================
+   FLOATING CALL (mobile only)
+   ============================================================ */
+.float-call {
+  position: fixed; bottom: 22px; right: 22px; z-index: 750;
+  display: none;
+  align-items: center; gap: 10px;
+  background: var(--accent); color: #fff;
+  padding: 14px 20px;
+  border-radius: var(--r-pill);
+  font-family: var(--f-disp); font-size: .85rem;
+  font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 12px 32px rgba(0,0,0,.5), 0 0 28px rgba(44,123,255,.5);
+}
+.float-call .ring {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.float-call .ring svg { width: 14px; height: 14px; stroke: #fff; }
+@media (max-width: 900px) {
+  .float-call { display: inline-flex; }
+}
+
+/* ============================================================
+   Mobile menu (overlay panel)
+   ============================================================ */
+.nav-burger { display: none; cursor: pointer; background: none; border: 0; color: var(--ink); padding: 8px; }
+.nav-burger svg { width: 26px; height: 26px; }
+@media (max-width: 1024px) {
+  .nav-burger { display: inline-flex; }
+}
+
+.mob-menu {
+  position: fixed; inset: 0; z-index: 900;
+  background: color-mix(in oklab, var(--bg) 96%, transparent);
+  backdrop-filter: blur(24px) saturate(140%);
+  display: flex; flex-direction: column; padding: 100px var(--gutter-md) var(--gutter-md);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur);
+}
+.mob-menu.open { opacity: 1; pointer-events: auto; }
+.mob-menu .close {
+  position: absolute; top: 22px; right: var(--gutter-md);
+  background: none; border: 0; color: var(--ink); cursor: pointer; padding: 8px;
+}
+.mob-menu .close svg { width: 26px; height: 26px; }
+.mob-menu ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.mob-menu a {
+  font-family: var(--f-disp); font-size: 1.8rem;
+  letter-spacing: -.01em; text-transform: uppercase; font-weight: 900;
+  color: var(--ink); padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mob-menu a::after { content: '→'; color: var(--accent); font-family: var(--f-disp); }
+.mob-menu .mob-cta {
+  margin-top: auto;
+  background: var(--accent); color: #fff;
+  font-family: var(--f-disp); font-size: 1rem; letter-spacing: .08em;
+  text-transform: uppercase; font-weight: 900;
+  padding: 20px; border-radius: var(--r-pill);
+  text-align: center;
+}
+
+/* ============================================================
+   Hero btns wrap nicely on mobile
+   ============================================================ */
+@media (max-width: 600px) {
+  .hero-trust { flex-wrap: wrap; gap: 12px; font-size: .58rem; }
+  .hero-trust .dot { display: none; }
+}
+
+/* ============================================================
+   REFINED HERO  —  left-aligned cinematic layout
+   Logo-as-headline on the left, truck cinematically visible on
+   the right. Buttons and nav pill tuned to be premium, restrained.
+   ============================================================ */
+
+/* Brighter, more visible truck. Push the truck slightly to the right
+   so the wordmark on the left has a darker side-panel to live in. */
+.hero { min-height: 92vh; }
+.hero-photo {
+  background-position: 70% 55%;
+  filter: brightness(.78) contrast(1.06) saturate(.92);
+}
+.hero-photo::after {
+  background:
+    /* Left-side gradient so wordmark reads on darker ground */
+    linear-gradient(to right,
+      color-mix(in oklab, var(--bg) 78%, transparent) 0%,
+      color-mix(in oklab, var(--bg) 38%, transparent) 32%,
+      transparent 58%,
+      transparent 100%),
+    /* Bottom + top vignette */
+    linear-gradient(to bottom,
+      color-mix(in oklab, var(--bg) 52%, transparent) 0%,
+      transparent 18%, transparent 78%,
+      color-mix(in oklab, var(--bg) 86%, transparent) 100%);
+}
+
+/* Disable the system's centered radial vignette over the hero */
+.hero::after { display: none; }
+
+/* Left-aligned hero content column */
+.hero-content.hero-left {
+  position: relative; z-index: 2;
+  max-width: var(--max-content);
+  margin: 0 auto;
+  width: 100%;
+  padding: 130px var(--gutter) 90px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Badge — outlined pill, top-left, blue accent */
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 9px 18px;
+  border: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
+  border-radius: var(--r-pill);
+  background: color-mix(in oklab, var(--accent) 7%, transparent);
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  backdrop-filter: blur(4px);
+}
+.hero-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(44,123,255,.9);
+  animation: pulse 2s ease-in-out infinite;
+}
+.hero-badge-sep {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: color-mix(in oklab, var(--ink) 45%, transparent);
+}
+
+/* Logo-as-headline — sized down ~22% from previous, still impactful */
+.hero-logo-h1 {
+  margin: 30px 0 22px;
+  line-height: 1;
+}
+.hero-logo-h1 img {
+  display: block;
+  width: clamp(280px, 38vw, 540px);
+  height: auto;
+  filter:
+    drop-shadow(0 14px 28px rgba(0,0,0,.55))
+    drop-shadow(0 0 38px rgba(44,123,255,.22));
+}
+
+/* Subtitle — tighter spacing under the logo */
+[data-mood="industrial-blue"] .hero-tag {
+  margin: 0 0 32px;
+  font-family: var(--f-body);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: clamp(.95rem, 1.1vw, 1.05rem);
+  color: var(--ink-sub);
+  line-height: 1.5;
+  max-width: 460px;
+}
+[data-mood="industrial-blue"] .hero-tag strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1.08em;
+  letter-spacing: -.005em;
+  margin-bottom: 4px;
+}
+[data-mood="industrial-blue"] .hero-tag span {
+  display: block;
+  color: color-mix(in oklab, var(--ink) 70%, transparent);
+}
+
+/* Hero buttons — left-aligned, refined, more elegant */
+.hero-content.hero-left .hero-btns {
+  justify-content: flex-start;
+  margin-top: 4px;
+  gap: 12px;
+}
+
+/* Refine the primary + ghost CTA proportions site-wide on this mood
+   so they look premium, not bulky */
+[data-mood="industrial-blue"] .btn-prim {
+  font-family: var(--f-disp);
+  font-weight: 900;
+  font-size: .78rem;
+  letter-spacing: .12em;
+  padding: 13px 24px;
+  box-shadow:
+    0 8px 22px rgba(44,123,255,.32),
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    inset 0 1px 0 rgba(255,255,255,.18);
+  gap: 9px;
+}
+[data-mood="industrial-blue"] .btn-ghost {
+  font-family: var(--f-disp);
+  font-weight: 700;
+  font-size: .76rem;
+  letter-spacing: .14em;
+  padding: 12px 22px;
+  gap: 12px;
+  border-color: color-mix(in oklab, var(--ink) 30%, transparent);
+  background: color-mix(in oklab, var(--ink) 4%, transparent);
+}
+[data-mood="industrial-blue"] .btn-ghost:hover {
+  background: color-mix(in oklab, var(--ink) 10%, transparent);
+}
+.btn-ico { width: 16px; height: 16px; }
+.btn-ico-r { margin-left: 2px; }
+
+/* Refined nav pill — minimal, not oversized */
+.nav-pill {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  font-family: var(--f-disp);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  box-shadow:
+    0 6px 18px rgba(44,123,255,.32),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+.nav-pill .phone-ico {
+  width: 15px; height: 15px;
+  stroke: #fff;
+}
+.nav-pill:hover { background: #1a5fdf; color: #fff !important; }
+
+/* Quiet down the nav padding so the nav-pill sits cleaner */
+.nav { padding: 18px var(--gutter); }
+.nav.stuck { padding: 10px var(--gutter); }
+
+/* Mobile refinements */
+@media (max-width: 900px) {
+  .hero-logo-h1 img { width: min(82vw, 420px); }
+  .hero-content.hero-left { padding: 110px var(--gutter-md) 70px; }
+  .hero-photo { background-position: 60% 60%; }
+  .hero-badge { font-size: .62rem; gap: 10px; padding: 8px 14px; }
+  .nav-logo-img img { height: 56px; }
+  .nav.stuck .nav-logo-img img { height: 48px; }
+  .nav-pill { padding: 9px 14px; font-size: .76rem; }
+}
+@media (max-width: 600px) {
+  .hero-logo-h1 img { width: 88vw; }
+  .hero-content.hero-left { padding: 100px 16px 60px; }
+  .hero-btns { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
+}
