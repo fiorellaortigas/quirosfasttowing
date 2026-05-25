@@ -541,10 +541,57 @@
       document.documentElement.style.overflow = '';
       lbImg.src = '';
     };
-    cells.forEach((c, idx) => c.addEventListener('click', () => open(idx)));
+
+    // ---- Cell activation --------------------------------------------------
+    // Event delegation on the grid so a tap that lands on the inner <img>,
+    // a child element, or the <button> itself all resolve to the cell. Plain
+    // per-cell listeners can miss on mobile when the touchend point shifts
+    // off the original target by a few pixels.
+    const cellFromEvent = (e) => {
+      const t = e.target && e.target.closest ? e.target.closest('.gal-cell') : null;
+      if (!t || !grid.contains(t)) return -1;
+      return cells.indexOf(t);
+    };
+    grid.addEventListener('click', (e) => {
+      const idx = cellFromEvent(e);
+      if (idx < 0) return;
+      e.preventDefault();
+      open(idx);
+    });
+    // Touch fallback — some mobile browsers under specific layout-shift
+    // conditions fail to dispatch a synthetic click after touchend. We track
+    // a non-scrolling tap and open the lightbox directly. A `_handled` flag
+    // suppresses the duplicate click that follows when it DOES fire.
+    let tStartX = 0, tStartY = 0, tStartT = 0, tStartIdx = -1, tHandled = false;
+    grid.addEventListener('touchstart', (e) => {
+      tHandled = false;
+      tStartIdx = cellFromEvent(e);
+      if (tStartIdx < 0) return;
+      const t = e.touches[0];
+      tStartX = t.clientX; tStartY = t.clientY; tStartT = Date.now();
+    }, { passive: true });
+    grid.addEventListener('touchend', (e) => {
+      if (tStartIdx < 0) return;
+      const endIdx = cellFromEvent(e);
+      if (endIdx !== tStartIdx) { tStartIdx = -1; return; }
+      const t = e.changedTouches[0];
+      const dx = Math.abs(t.clientX - tStartX);
+      const dy = Math.abs(t.clientY - tStartY);
+      const dt = Date.now() - tStartT;
+      tStartIdx = -1;
+      // Only treat as a tap: not a scroll/swipe, not a long-press.
+      if (dx > 12 || dy > 12 || dt > 600) return;
+      tHandled = true;
+      e.preventDefault(); // prevent the duplicate synthetic click
+      open(endIdx);
+    }, { passive: false });
+
+    // ---- Lightbox controls ------------------------------------------------
     lbClose.addEventListener('click', close);
     lbPrev.addEventListener('click', (e) => { e.stopPropagation(); show(i - 1); });
     lbNext.addEventListener('click', (e) => { e.stopPropagation(); show(i + 1); });
+    // Backdrop tap closes — only when the tap target IS the overlay (not a
+    // child like the image, caption, close, or arrow buttons).
     lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
     document.addEventListener('keydown', (e) => {
       if (!lb.classList.contains('open')) return;
@@ -552,13 +599,20 @@
       else if (e.key === 'ArrowLeft') show(i - 1);
       else if (e.key === 'ArrowRight') show(i + 1);
     });
-    // Swipe
-    let sx = 0;
-    lb.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
+    // Swipe inside the lightbox (only when open) — and only horizontal
+    // moves > 40px. A short tap (dx≈0) never triggers a swipe, so taps on
+    // the close / arrow buttons fall through to their click handlers.
+    let sx = 0, sy = 0;
+    lb.addEventListener('touchstart', (e) => {
+      if (!lb.classList.contains('open')) return;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+    }, { passive: true });
     lb.addEventListener('touchend', (e) => {
+      if (!lb.classList.contains('open')) return;
       const dx = e.changedTouches[0].clientX - sx;
-      if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
-    });
+      const dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(i + (dx < 0 ? 1 : -1));
+    }, { passive: true });
   })();
 </script>
 </body>
