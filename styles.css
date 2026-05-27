@@ -601,10 +601,10 @@
     0 0 28px -8px rgba(44, 123, 255, .22);
 }
 .hero-qr-card {
-  width: 96px; height: 96px;
-  border-radius: 8px;
+  width: 152px; height: 152px;
+  border-radius: 10px;
   background: #fff;
-  padding: 6px;
+  padding: 8px;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 6px 14px -6px rgba(0,0,0,.55);
 }
@@ -634,13 +634,14 @@
     gap: 10px;
     border-radius: 12px;
   }
-  .hero-qr-card { width: 70px; height: 70px; padding: 4px; }
+  .hero-qr-card { width: 116px; height: 116px; padding: 5px; }
   .hero-qr-eyebrow { font-size: .56rem; letter-spacing: .24em; }
   .hero-qr-label { font-size: .72rem; }
 }
 @media (max-width: 480px) {
   .hero-qr-cap { display: none; }
   .hero-qr { padding: 6px; }
+  .hero-qr-card { width: 112px; height: 112px; padding: 5px; }
 }
 
 /* ============================================================
@@ -919,4 +920,88 @@ button.gal-cell:focus-visible {
   }
   .loc-card .loc-h { font-size: 1.8rem; }
   .loc-card-btns { flex-direction: column; }
+}
+
+
+/* ============================================================
+   PRODUCT MINI-GALLERY  — main image + thumbnail strip per service.
+   Lives INSIDE .prod-img; main image swaps when a thumb is clicked.
+   ============================================================ */
+.prod-img.has-gallery {
+  display: flex; flex-direction: column;
+}
+.prod-img.has-gallery .prod-main {
+  flex: 1 1 auto;
+  width: 100%; height: 100%;
+  min-height: 0;
+  object-fit: cover; object-position: center;
+  filter: var(--img-filter);
+  transition: filter var(--dur-img) var(--ease), transform var(--dur-img) var(--ease), opacity .25s var(--ease);
+}
+.prod-img.has-gallery .prod-main.is-swapping { opacity: .35; }
+.prod-row:hover .prod-img.has-gallery .prod-main {
+  filter: var(--img-filter-hover);
+  transform: scale(1.03);
+}
+.prod-thumbs {
+  flex: 0 0 auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+  padding: 8px;
+  background: color-mix(in oklab, var(--bg) 92%, var(--ink) 8%);
+  border-top: 1px solid var(--border);
+}
+.prod-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--bg-3);
+  border: 1.5px solid transparent;
+  border-radius: 4px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.prod-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+  transition: transform .35s var(--ease);
+}
+.prod-thumb:hover { border-color: color-mix(in oklab, var(--accent) 60%, transparent); }
+.prod-thumb:hover img { transform: scale(1.06); }
+.prod-thumb.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.prod-thumb.is-active::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 60%, color-mix(in oklab, var(--accent) 30%, transparent) 100%);
+  pointer-events: none;
+}
+
+/* On large screens (image-half = ~640px), keep thumbs at a comfortable size.
+   For 4-thumb rows: ~140px each. For 6-thumb rows: ~95px each. */
+@media (max-width: 1100px) {
+  .prod-thumbs { padding: 6px; gap: 5px; }
+}
+@media (max-width: 760px) {
+  .prod-img.has-gallery { height: auto; min-height: 320px; }
+  .prod-img.has-gallery .prod-main {
+    height: 280px; flex: 0 0 280px;
+  }
+  .prod-thumbs { padding: 6px; gap: 5px; }
+  .prod-thumb { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 520px) {
+  .prod-thumbs {
+    grid-auto-flow: column;
+    overflow-x: auto;
+    grid-auto-columns: 80px;
+    scrollbar-width: thin;
+  }
+  .prod-thumb { aspect-ratio: 1; }
 }
